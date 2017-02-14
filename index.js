@@ -1,11 +1,17 @@
 var express = require('express');
 var cmacc = require('cmacc-compiler');
 
+var path = require('path');
+var bodyParser = require('body-parser');
+
 var router = express.Router();
 
-function api(file) {
+function api(dir) {
+    
+    router.use(bodyParser.json())
 
-    router.get("/api/*", function (req, res, next) {
+    router.get("*", function (req, res, next) {
+        var file = path.join(dir, req.url)
         try {
             var ast = cmacc.compile("file://" + file);
             var EmptyVars = cmacc.find(ast);
@@ -15,9 +21,8 @@ function api(file) {
         }
     });
 
-    router.post("/api/*", function (req, res, next) {
-        var file = path.join(__dirname, req.url.replace("/api", "/cmacc"));
-
+    router.post("*", function (req, res, next) {
+        var file = path.join(dir, req.url)
         try {
             var ast = cmacc.compile("file://" + file);
             var data = cmacc.string(req.body);

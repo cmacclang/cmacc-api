@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/cmacclang/cmacc-api#readme",
   "dependencies": {
+    "body-parser": "^1.16.1",
+    "cmacc-compiler": "1.0.14",
     "express": "^4.14.1"
   }
 }
